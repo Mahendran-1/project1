@@ -25,9 +25,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
+        if (userService.userExists(user.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "User already exists!")); // ❌ 409 Conflict
+        }
         User registeredUser = userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser); // ✅ Return 201 Created
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser); // ✅ 201 Created
     }
 
     @PostMapping("/login")
@@ -36,9 +39,14 @@ public class AuthController {
 
         if (authResponse.isPresent()) {
             return ResponseEntity.ok(authResponse.get()); // ✅ 200 OK
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials!")); // ❌ 401 Unauthorized
         }
+
+        // Check if user exists before returning Unauthorized
+        if (!userService.userExists(user.getUsername())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User does not exist!")); // ❌ 404 Not Found
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials!")); // ❌ 401 Unauthorized
     }
 
     @PostMapping("/encode-password")
