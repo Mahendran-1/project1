@@ -29,7 +29,11 @@ public class SecurityConfig {
     private static final String[] PUBLIC_URLS = {
             "/api/auth/register",
             "/api/auth/login",
-            "/api/auth/encode-password"
+            "/api/auth/encode-password",
+            "/api/accounts" // ✅ Allow public access to account creation
+
+
+
     };
 
     @Bean

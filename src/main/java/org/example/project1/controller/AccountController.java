@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/accounts")
+@CrossOrigin(origins = "http://localhost:4200") // Adjust based on Angular server
 public class AccountController {
 
     @Autowired
