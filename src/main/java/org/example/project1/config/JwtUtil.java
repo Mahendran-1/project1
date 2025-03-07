@@ -29,7 +29,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    // ✅ Generate JWT Token
+    //  Generate JWT Token
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -39,23 +39,23 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ Extract Username from Token
+    //  Extract Username from Token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // ✅ Extract Expiration Date from Token
+    //  Extract Expiration Date from Token
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // ✅ Extract Specific Claim
+    //  Extract Specific Claim
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    // ✅ Extract All Claims from Token
+    //  Extract All Claims from Token
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -64,18 +64,18 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // ✅ Check if Token is Expired
+    //  Check if Token is Expired
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    // ✅ Validate Token
+    //  Validate Token
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    // 🔥 **NEW FIX: Get Authentication Object**
+    //  Get Authentication Object**
     public Authentication getAuthentication(String token) {
         String username = extractUsername(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);

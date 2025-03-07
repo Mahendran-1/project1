@@ -30,7 +30,7 @@ public class SecurityConfig {
             "/api/auth/register",
             "/api/auth/login",
             "/api/auth/encode-password",
-            "/api/accounts" // ✅ Allow public access to account creation
+            "/api/accounts" 
 
 
 

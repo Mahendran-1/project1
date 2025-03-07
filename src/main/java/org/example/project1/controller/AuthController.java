@@ -30,7 +30,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "User already exists!")); // ❌ 409 Conflict
         }
         User registeredUser = userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser); // ✅ 201 Created
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser); //  201 Created
     }
 
     @PostMapping("/login")
@@ -38,24 +38,24 @@ public class AuthController {
         Optional<AuthResponse> authResponse = userService.authenticateUser(user.getUsername(), user.getPassword());
 
         if (authResponse.isPresent()) {
-            return ResponseEntity.ok(authResponse.get()); // ✅ 200 OK
+            return ResponseEntity.ok(authResponse.get()); //  200 OK
         }
 
         // Check if user exists before returning Unauthorized
         if (!userService.userExists(user.getUsername())) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User does not exist!")); // ❌ 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User does not exist!")); //  404 Not Found
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials!")); // ❌ 401 Unauthorized
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials!")); //  401 Unauthorized
     }
 
     @PostMapping("/encode-password")
     public ResponseEntity<?> encodePassword(@RequestBody Map<String, String> requestBody) {
         if (!requestBody.containsKey("password") || requestBody.get("password").isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Password is required!")); // ❌ 400 Bad Request
+            return ResponseEntity.badRequest().body(Map.of("error", "Password is required!")); //  400 Bad Request
         }
 
         String encodedPassword = passwordEncoder.encode(requestBody.get("password"));
-        return ResponseEntity.ok(Map.of("encodedPassword", encodedPassword)); // ✅ 200 OK
+        return ResponseEntity.ok(Map.of("encodedPassword", encodedPassword)); //  200 OK
     }
 }

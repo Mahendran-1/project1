@@ -22,13 +22,13 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    // 🔥 New method to check if the user exists
+    //  New method to check if the user exists
     public boolean userExists(String username) {
         return userRepository.findByUsername(username).isPresent();
     }
 
     public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // ✅ Encrypt password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword())); //  Encrypt password before saving
         return userRepository.save(user);
     }
 
@@ -38,12 +38,12 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // ✅ Check if password matches
+            //  Check if password matches
             if (passwordEncoder.matches(password, user.getPassword())) {
                 String token = jwtUtil.generateToken(username);
                 return Optional.of(new AuthResponse(token, username));
             }
         }
-        return Optional.empty(); // ❌ Authentication failed
+        return Optional.empty(); //  Authentication failed
     }
 }

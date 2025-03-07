@@ -16,13 +16,13 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    // ✅ Create new account (POST request)
+    //  Create new account (POST request)
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
         return accountService.createAccount(account);
     }
 
-    // ✅ Get all accounts (GET request)
+    //  Get all accounts (GET request)
     @GetMapping
     public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();

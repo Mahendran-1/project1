@@ -19,7 +19,7 @@ public class Account {
     private String accountType;
     private Double initialDeposit;
 
-    // ✅ Generate account number before persisting
+    //  Generate account number before persisting
     @PrePersist
     protected void generateAccountNumber() {
         if (this.accountNumber == null || this.accountNumber.isEmpty()) {
@@ -27,7 +27,7 @@ public class Account {
         }
     }
 
-    // ✅ Getters and Setters
+    //  Getters and Setters
     public Long getId() {
         return id;
     }
