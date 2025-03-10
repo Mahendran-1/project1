@@ -19,15 +19,16 @@ public class Account {
     private String accountType;
     private Double initialDeposit;
 
-    //  Generate account number before persisting
     @PrePersist
     protected void generateAccountNumber() {
         if (this.accountNumber == null || this.accountNumber.isEmpty()) {
             this.accountNumber = "ACCT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         }
+        if (this.initialDeposit == null) {
+            this.initialDeposit = 0.0;
+        }
     }
 
-    //  Getters and Setters
     public Long getId() {
         return id;
     }
