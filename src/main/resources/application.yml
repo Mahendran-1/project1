@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+jwt:
+  secret: ""
+  expiration: 86400000
+logging:
+  level:
+    org.springframework.security: DEBUG
