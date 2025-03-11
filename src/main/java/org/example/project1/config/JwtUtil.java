@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "yourSecretKeyForJWTAuthenticationYourSecretKeyForJWT";
+    private final String SECRET_KEY = "";
 
     private final UserDetailsService userDetailsService;
 
