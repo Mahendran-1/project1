@@ -35,7 +35,8 @@ public class SecurityConfig {
             "/api/auth/login",
             "/api/auth/encode-password",
             "/api/accounts/**",
-            "/api/accounts/add-cash" // explicitly match your endpoint
+            "/api/accounts/add-cash",
+            "/api/accounts/withdraw-cash"// explicitly match your endpoint
 
     };
 

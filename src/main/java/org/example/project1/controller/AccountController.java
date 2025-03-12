@@ -1,6 +1,8 @@
 package org.example.project1.controller;
 
 import org.example.project1.DTO.AddCashRequest;
+import org.example.project1.DTO.WithdrawRequest;
+import org.example.project1.DTO.TransactionResponse;
 import org.example.project1.Entity.Account;
 import org.example.project1.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,18 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/accounts/withdraw-cash")
+    public ResponseEntity<?> withdrawCash(@RequestBody WithdrawRequest request) {
+        try {
+            TransactionResponse response = accountService.withdrawCash(request);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
 
     @GetMapping("/accounts/{accountNumber}")
     public ResponseEntity<?> getAccountByNumber(@PathVariable String accountNumber) {
