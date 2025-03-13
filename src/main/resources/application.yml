@@ -8,8 +8,8 @@ spring:
     hibernate:
       ddl-auto: update
 jwt:
-  secret: ""
+  secret: "MySuperSecretKeyThatShouldBeLongAndBase64Encoded1234567890"
   expiration: 86400000
 logging:
   level:
-    org.springframework.security: DEBUG
+    org.springframework.security: INFO
