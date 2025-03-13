@@ -32,12 +32,12 @@ public class AccountService {
         Account account = accountRepository.findByAccountNumber(request.getAccountNumber())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
-        // Ensure initialDeposit is never null (important)
+        // Ensure initialDeposit is never null
         if (account.getInitialDeposit() == null) {
             account.setInitialDeposit(0.0);
         }
 
-        // Add the deposited amount directly to initialDeposit
+        // Add deposited amount
         account.setInitialDeposit(account.getInitialDeposit() + request.getAmount());
 
         return accountRepository.save(account);
@@ -48,7 +48,6 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Account not found"));
     }
 
-    // New: Withdraw Cash Functionality
     @Transactional
     public TransactionResponse withdrawCash(WithdrawRequest request) {
         Optional<Account> optionalAccount = accountRepository.findByAccountNumber(request.getAccountNumber());
@@ -78,5 +77,23 @@ public class AccountService {
                 account.getInitialDeposit(),
                 "Withdrawal successful"
         );
+    }
+    public String deactivateAccount(String accountNumber, String remarks) {
+        Optional<Account> accountOpt = accountRepository.findByAccountNumber(accountNumber);
+
+        if (accountOpt.isPresent()) {
+            Account account = accountOpt.get();
+
+            // Check if balance is zero before deletion
+            if (account.getInitialDeposit() != null && account.getInitialDeposit() > 0) {
+                return "Account cannot be deactivated. Please withdraw all funds before deactivation.";
+            }
+
+            // If balance is zero, delete the account
+            accountRepository.delete(account);
+            return "Account " + accountNumber + " successfully deactivated.";
+        }
+
+        return "Account not found.";
     }
 }
