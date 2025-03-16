@@ -33,7 +33,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    //  Database Driver (Change if using PostgreSQL)
+    //  Database Driver (using MYSQL)
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     //  JWT Authentication (JSON Web Token)
