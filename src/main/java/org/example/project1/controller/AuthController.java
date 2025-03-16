@@ -27,7 +27,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userService.userExists(user.getUsername())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "User already exists!")); // ❌ 409 Conflict
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "User already exists!")); //  409 Conflict
         }
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser); //  201 Created
